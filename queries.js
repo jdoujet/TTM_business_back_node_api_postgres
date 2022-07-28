@@ -6,7 +6,7 @@ const pool = new Pool({
 
 
 const getUsers = (request, response) => {
-    pool.query('SELECT * FROM utilisateurs', (error, results) => {
+    pool.query('SELECT * FROM utilisateurs;', (error, results) => {
       if (error) {
         throw error
       }
