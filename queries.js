@@ -10,7 +10,7 @@ const getUsers = (request, response) => {
       if (error) {
         throw error
       }
-      response.status(200).json(results.rows)
+      console.log(response.status(200).json(results.rows))
     })
   }
 
