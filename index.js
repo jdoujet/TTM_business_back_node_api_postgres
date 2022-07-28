@@ -2,8 +2,8 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
-const port = process.env.PORT //35355 by default for my heroku
-const db = require('./queries').default
+const port = process.env.PORT || 3000//35355 by default for my heroku
+const db = require('./queries.js')
 
 app.use(bodyParser.json())
 app.use(
