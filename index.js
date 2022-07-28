@@ -18,6 +18,8 @@ app.get('/', (request, response) => {
 
 app.get('/utilisateurs', db.getUsers)
 
+app.get('/utilisateurs/:id', db.getUserById)
+
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)
 })

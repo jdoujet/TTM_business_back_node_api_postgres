@@ -15,28 +15,68 @@ const getUsers = (request, response) => {
       }
       response.status(200).json(results.rows)
     })
-  }
+}
 
- /* const { Client } = require('pg');
+const getRayons = (request, response) => {
+    pool.query('SELECT * FROM rayons;', (error, results) => {
+      if (error) {
+        throw error
+      }
+      response.status(200).json(results.rows)
+    })
+}
 
-  const client = new Client({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false
-    }
-  });
+const getUserById = (request, response) => {
+    const id = parseInt(request.query.id)
   
-  client.connect();
-  const getUsers = (request, response) => {
-    client.query('SELECT * FROM utilisateurs;', (err, res) => {
-        if (err) throw err;
-        for (let row of res.rows) {
-        console.log(JSON.stringify(row));
-        }
-        client.end();
-    });
+    pool.query('SELECT * FROM utilisateurs WHERE id = $1;', [id], (error, results) => {
+      if (error) {
+        throw error
+      }
+      response.status(200).json(results.rows)
+    })
   }
-*/
+
+
+const createUser = (request, response) => {
+    const { name, email } = request.query
+  
+    pool.query('INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *', [name, email], (error, results) => {
+      if (error) {
+        throw error
+      }
+      response.status(201).send(`User added with ID: ${results.rows[0].id}`)
+    })
+}
+
+const updateUser = (request, response) => {
+    const id = parseInt(request.params.id)
+    const { name, email } = request.body
+  
+    pool.query(
+      'UPDATE users SET name = $1, email = $2 WHERE id = $3',
+      [name, email, id],
+      (error, results) => {
+        if (error) {
+          throw error
+        }
+        response.status(200).send(`User modified with ID: ${id}`)
+      }
+    )
+}
+
+const deleteUser = (request, response) => {
+    const id = parseInt(request.params.id)
+  
+    pool.query('DELETE FROM users WHERE id = $1', [id], (error, results) => {
+      if (error) {
+        throw error
+      }
+      response.status(200).send(`User deleted with ID: ${id}`)
+    })
+}
+
   module.exports = {
-    getUsers
+    getUsers,
+    getUserById
   }
