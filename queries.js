@@ -17,17 +17,8 @@ const getUsers = (request, response) => {
     })
 }
 
-const getRayons = (request, response) => {
-    pool.query('SELECT * FROM rayons;', (error, results) => {
-      if (error) {
-        throw error
-      }
-      response.status(200).json(results.rows)
-    })
-}
-
 const getUserById = (request, response) => {
-    const id = parseInt(request.params.id)
+    const id = parseInt(request.query.id)
   
     pool.query('SELECT * FROM utilisateurs WHERE id = $1;', [id], (error, results) => {
       if (error) {
@@ -36,6 +27,18 @@ const getUserById = (request, response) => {
       response.status(200).json(results.rows)
     })
   }
+
+
+/*
+
+const getRayons = (request, response) => {
+    pool.query('SELECT * FROM rayons;', (error, results) => {
+      if (error) {
+        throw error
+      }
+      response.status(200).json(results.rows)
+    })
+}
 
 
 const createUser = (request, response) => {
@@ -74,7 +77,7 @@ const deleteUser = (request, response) => {
       }
       response.status(200).send(`User deleted with ID: ${id}`)
     })
-}
+}*/
 
   module.exports = {
     getUsers,
