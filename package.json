@@ -1,0 +1,20 @@
+{
+  "name": "TTM_business_back_node_api_postgres",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jdoujet/TTM_business_back_node_api_postgres.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jdoujet/TTM_business_back_node_api_postgres/issues"
+  },
+  "homepage": "https://github.com/jdoujet/TTM_business_back_node_api_postgres#readme"
+}
