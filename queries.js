@@ -18,7 +18,7 @@ const getUsers = (request, response) => {
 }
 
 const getUserById = (request, response) => {
-    const id = parseInt(request.query.id)
+    const id = request.query.id
   
     pool.query('SELECT * FROM utilisateurs WHERE id_user = $1;', [id], (error, results) => {
       if (error) {
@@ -26,7 +26,7 @@ const getUserById = (request, response) => {
       }
       response.status(200).json(results.rows)
     })
-  }
+}
 
 
 /*
