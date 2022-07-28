@@ -27,7 +27,7 @@ const getRayons = (request, response) => {
 }
 
 const getUserById = (request, response) => {
-    const id = parseInt(request.query.id)
+    const id = parseInt(request.params.id)
   
     pool.query('SELECT * FROM utilisateurs WHERE id = $1;', [id], (error, results) => {
       if (error) {
