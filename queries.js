@@ -29,11 +29,19 @@ const getUserById = (request, response) => {
     })
 }
 
-/*const getBeaconByIdPlanAndEtageAndIdUser = (request, response) => {
+const getBeaconByIdPlanAndEtageAndIdUser = (request, response) => {
     
-  const id = parseInt(request.params.id)
-  console.log(typeof id, id)
-  pool.query('SELECT * FROM utilisateurs WHERE id_user = $1;', [id], (error, results) => {
+  const id_user = parseInt(request.params.id_user)
+  const id_plan = parseInt(request.params.id_plan)
+  const etage = parseInt(request.params.etage)
+  pool.query('SELECT DISTINCT b.* '+
+    'FROM plan p '+
+    'LEFT JOIN link_plan_beacon lpb ON p.id_plan = lpb.id_plan '+
+    'LEFT JOIN beacon b ON lpb.id_beacon = b.id_beacon '+
+    'LEFT JOIN link_supermarche_plan lsp ON p.id_plan = lsp.id_plan '+
+    'INNER JOIN link_utilisateur_supermarche lus ON lsp.id_supermarche = lus.id_supermarche AND lus.id_user = $1 '+
+    'WHERE p.id_plan=$2 AND p.etage=$3;',
+  [id_user, id_plan, etage], (error, results) => {
     if (error) {
       throw error
     }
@@ -55,7 +63,7 @@ const getRayonByIdPlanAndEtageAndIdUser = (request, response) => {
 
 const getPlanByIdPlanAndEtageAndIdUser = (request, response) => {
   const id = parseInt(request.params.id)
-  console.log(typeof id, id)
+  
   pool.query('SELECT * FROM utilisateurs WHERE id_user = $1;', [id], (error, results) => {
     if (error) {
       throw error
@@ -63,7 +71,7 @@ const getPlanByIdPlanAndEtageAndIdUser = (request, response) => {
     response.status(200).json(results.rows)
   })
 }
-*/
+
 const getPlansByIdUserAndByIdSupermarche = (request, response) => {
   const id_user = parseInt(request.params.id_user);
   const id_supermarche = parseInt(request.params.id_supermarche);
@@ -133,5 +141,6 @@ const deleteUser = (request, response) => {
   module.exports = {
     getUsers,
     getUserById,
+    getBeaconByIdPlanAndEtageAndIdUser,
     getPlansByIdUserAndByIdSupermarche
   }
