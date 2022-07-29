@@ -67,11 +67,11 @@ const getPlanByIdPlanAndEtageAndIdUser = (request, response) => {
 const getPlansByIdUserAndByIdSupermarche = (request, response) => {
   const id_user = parseInt(request.params.id_user);
   const id_supermarche = parseInt(request.params.id_supermarche);
-  console.log(typeof id, id)
+  
   pool.query('SELECT DISTINCT p.*'+
   'FROM plan p'+
-  'INNER JOIN link_supermarche_plan lsp ON p.id_plan = lsp.id_plan AND lsp.id_supermarche=$1'+
-  'INNER JOIN link_utilisateur_supermarche lus ON lsp.id_supermarche = lus.id_supermarche AND lus.id_user = $2;', 
+  'INNER JOIN link_supermarche_plan lsp ON p.id_plan = lsp.id_plan AND lsp.id_supermarche = $2'+
+  'INNER JOIN link_utilisateur_supermarche lus ON lsp.id_supermarche = lus.id_supermarche AND lus.id_user = $1;', 
   [id_user,id_supermarche], (error, results) => {
     if (error) {
       throw error
