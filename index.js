@@ -20,9 +20,11 @@ app.get('/utilisateur', db.getUsers)
 
 app.get('/utilisateur/:id', db.getUserById)
 
-app.get('/utilisateur/:id_user/supermarche/:id_supermarche', db.getPlansByIdUserAndByIdSupermarche)
+app.get('plan/utilisateur/:id_user/supermarche/:id_supermarche', db.getPlansByIdUserAndByIdSupermarche)
 
-app.get('/utilisateur/:id_user/plan/:id_plan/etage/:etage', db.getBeaconByIdPlanAndEtageAndIdUser)
+app.get('beacon/utilisateur/:id_user/plan/:id_plan/etage/:etage', db.getBeaconByIdPlanAndEtageAndIdUser)
+
+app.get('rayon/utilisateur/:id_user/plan/:id_plan/etage/:etage', db.getRayonByIdPlanAndEtageAndIdUser)
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)
