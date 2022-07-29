@@ -246,3 +246,40 @@ INSERT INTO link_rayon_article
 (id_rayon, id_article)
 VALUES (1,1),(1,2),(1,3),(5,4),(1,5),(5,6),(5,7),(3,8),(3,9),(3,10),(2,11),(4,12);
 
+SELECT r.* 
+FROM rayon r
+INNER JOIN link_plan_rayon lpr ON r.id_rayon = lpr.id_rayon
+INNER JOIN link_supermarche_plan lsp ON lpr.id_plan = lsp.id_plan
+INNER JOIN link_utilisateur_supermarche lus ON lsp.id_supermarche = lus.id_supermarche AND lus.id_user = 1;
+
+'''SELECT p.*, r.*, b.*
+FROM plan p
+LEFT JOIN link_plan_rayon lpr ON p.id_plan = lpr.id_plan
+LEFT JOIN rayon r ON lpr.id_rayon = r.id_rayon
+LEFT JOIN link_plan_beacon lpb ON p.id_plan = lpb.id_plan
+LEFT JOIN beacon b ON lpb.id_beacon = b.id_beacon
+LEFT JOIN link_supermarche_plan lsp ON p.id_plan = lsp.id_plan
+INNER JOIN link_utilisateur_supermarche lus ON lsp.id_supermarche = lus.id_supermarche AND lus.id_user = 1
+WHERE p.id_plan=1 AND p.etage=0;
+'''
+SELECT DISTINCT p.*
+FROM plan p
+LEFT JOIN link_supermarche_plan lsp ON p.id_plan = lsp.id_plan
+INNER JOIN link_utilisateur_supermarche lus ON lsp.id_supermarche = lus.id_supermarche AND lus.id_user = 1
+WHERE p.id_plan=1 AND p.etage=0;
+
+SELECT DISTINCT r.*
+FROM plan p 
+LEFT JOIN link_plan_rayon lpr ON p.id_plan = lpr.id_plan
+LEFT JOIN rayon r ON lpr.id_rayon = r.id_rayon
+LEFT JOIN link_supermarche_plan lsp ON p.id_plan = lsp.id_plan
+INNER JOIN link_utilisateur_supermarche lus ON lsp.id_supermarche = lus.id_supermarche AND lus.id_user = 1
+WHERE p.id_plan=1 AND p.etage=0;
+
+SELECT DISTINCT b.*
+FROM plan p
+LEFT JOIN link_plan_beacon lpb ON p.id_plan = lpb.id_plan
+LEFT JOIN beacon b ON lpb.id_beacon = b.id_beacon
+LEFT JOIN link_supermarche_plan lsp ON p.id_plan = lsp.id_plan
+INNER JOIN link_utilisateur_supermarche lus ON lsp.id_supermarche = lus.id_supermarche AND lus.id_user = 1
+WHERE p.id_plan=1 AND p.etage=0;
