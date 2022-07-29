@@ -9,7 +9,7 @@ const pool = new Pool({
 
 
 const getUsers = (request, response) => {
-    pool.query('SELECT * FROM utilisateurs;', (error, results) => {
+    pool.query('SELECT * FROM utilisateur;', (error, results) => {
       if (error) {
         throw error
       }
@@ -21,7 +21,7 @@ const getUserById = (request, response) => {
     
     const id = parseInt(request.params.id)
     console.log(typeof id, id)
-    pool.query('SELECT * FROM utilisateurs WHERE id_user = $1;', [id], (error, results) => {
+    pool.query('SELECT * FROM utilisateur WHERE id_user = $1;', [id], (error, results) => {
       if (error) {
         throw error
       }
