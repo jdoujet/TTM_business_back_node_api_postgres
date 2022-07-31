@@ -8,7 +8,7 @@ const pool = new Pool({
 })
 
 
-const bcrypt = require('bcrypt')
+//const bcrypt = require('bcrypt')
 
 
 const getUsers = (request, response) => {
