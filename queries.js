@@ -86,7 +86,7 @@ const getRayonByIdPlanAndEtageAndIdUser = (request, response) => {
   })
 }
 
-const getPlanByIdPlanAndEtageAndIdUser = (request, response) => {
+/*const getPlanByIdPlanAndEtageAndIdUser = (request, response) => {
   const id = parseInt(request.params.id)
   
   pool.query('SELECT * FROM utilisateurs WHERE id_user = $1;', [id], (error, results) => {
@@ -95,7 +95,7 @@ const getPlanByIdPlanAndEtageAndIdUser = (request, response) => {
     }
     response.status(200).json(results.rows)
   })
-}
+}*/
 
 const getPlansByIdUserAndByIdSupermarche = (request, response) => {
   const id_user = parseInt(request.params.id_user);
