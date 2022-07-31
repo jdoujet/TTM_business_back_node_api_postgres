@@ -20,9 +20,9 @@ app.get('/', (request, response) => {
 
 app.get('/utilisateur', db.getUsers)
 
-app.get('/utilisateur/:id', db.getUserById)
+app.get('/utilisateur/:id_user', db.getUserById)
 
-app.get('/utilisateur/:id/supermarche', db.getSupermarcheByIdUser)
+app.get('/utilisateur/:id_user/supermarche', db.getSupermarcheByIdUser)
 
 /*app.get('/utilisateur/:id/supermarche/:id/etage', db.getEtagesByIdSupermarcheAndIdUser)*/
 
