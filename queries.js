@@ -8,6 +8,9 @@ const pool = new Pool({
 })
 
 
+const bcrypt = require('bcrypt')
+
+
 const getUsers = (request, response) => {
     pool.query('SELECT * FROM utilisateur;', (error, results) => {
       if (error) {
@@ -20,13 +23,26 @@ const getUsers = (request, response) => {
 const getUserById = (request, response) => {
     
     const id = parseInt(request.params.id)
-    console.log(typeof id, id)
     pool.query('SELECT * FROM utilisateur WHERE id_user = $1;', [id], (error, results) => {
       if (error) {
         throw error
       }
       response.status(200).json(results.rows)
     })
+}
+
+const getSupermarcheByIdUser = (request, response) => {
+    
+  const id_user = parseInt(request.params.id_user)
+  pool.query('SELECT DISTINCT s.* '+
+    'FROM supermarche s '+
+    'INNER JOIN link_utilisateur_supermarche lus ON s.id_supermarche = lus.id_supermarche AND lus.id_user = $1 ;',
+  [id_user], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
 }
 
 const getBeaconByIdPlanAndEtageAndIdUser = (request, response) => {
@@ -150,6 +166,7 @@ const deleteUser = (request, response) => {
   module.exports = {
     getUsers,
     getUserById,
+    getSupermarcheByIdUser,
     getBeaconByIdPlanAndEtageAndIdUser,
     getPlansByIdUserAndByIdSupermarche,
     getRayonByIdPlanAndEtageAndIdUser
