@@ -45,6 +45,25 @@ const getSupermarcheByIdUser = (request, response) => {
   })
 }
 
+const getBeaconByIdPlanAndIdUser = (request, response) => {
+    
+  const id_user = parseInt(request.params.id_user)
+  const id_plan = parseInt(request.params.id)
+  pool.query('SELECT DISTINCT b.* '+
+    'FROM plan p '+
+    'LEFT JOIN link_plan_beacon lpb ON p.id = lpb.id_plan '+
+    'LEFT JOIN beacon b ON lpb.id_beacon = b.id_beacon '+
+    'LEFT JOIN link_supermarche_plan lsp ON p.id = lsp.id_plan '+
+    'INNER JOIN link_utilisateur_supermarche lus ON lsp.id_supermarche = lus.id_supermarche AND lus.id_user = $1 '+
+    'WHERE p.id=$2;',
+  [id_user, id_plan], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
+
 const getBeaconByIdPlanAndEtageAndIdUser = (request, response) => {
     
   const id_user = parseInt(request.params.id_user)
@@ -52,15 +71,35 @@ const getBeaconByIdPlanAndEtageAndIdUser = (request, response) => {
   const etage = parseInt(request.params.etage)
   pool.query('SELECT DISTINCT b.* '+
     'FROM plan p '+
-    'LEFT JOIN link_plan_beacon lpb ON p.id_plan = lpb.id_plan '+
+    'LEFT JOIN link_plan_beacon lpb ON p.id = lpb.id_plan '+
     'LEFT JOIN beacon b ON lpb.id_beacon = b.id_beacon '+
-    'LEFT JOIN link_supermarche_plan lsp ON p.id_plan = lsp.id_plan '+
+    'LEFT JOIN link_supermarche_plan lsp ON p.id = lsp.id_plan '+
     'INNER JOIN link_utilisateur_supermarche lus ON lsp.id_supermarche = lus.id_supermarche AND lus.id_user = $1 '+
     'WHERE p.id_plan=$2 AND p.etage=$3;',
   [id_user, id_plan, etage], (error, results) => {
     if (error) {
       throw error
     }
+    response.status(200).json(results.rows)
+  })
+}
+
+const getRayonByIdPlanAndIdUser = (request, response) => {
+    
+  const id_user = parseInt(request.params.id_user)
+  const id_plan = parseInt(request.params.id_plan)
+
+  pool.query('SELECT DISTINCT r.* '+
+    'FROM plan p '+ 
+    'LEFT JOIN link_plan_rayon lpr ON p.id = lpr.id_plan '+
+    'LEFT JOIN rayon r ON lpr.id_rayon = r.id_rayon '+
+    'LEFT JOIN link_supermarche_plan lsp ON p.id = lsp.id_plan '+
+    'INNER JOIN link_utilisateur_supermarche lus ON lsp.id_supermarche = lus.id_supermarche AND lus.id_user = $1 '+
+    'WHERE p.id = $2;',
+  [id_user, id_plan], (error, results) => {
+  if (error) {
+    throw error
+  }
     response.status(200).json(results.rows)
   })
 }
@@ -73,12 +112,30 @@ const getRayonByIdPlanAndEtageAndIdUser = (request, response) => {
 
   pool.query('SELECT DISTINCT r.* '+
     'FROM plan p '+ 
-    'LEFT JOIN link_plan_rayon lpr ON p.id_plan = lpr.id_plan '+
+    'LEFT JOIN link_plan_rayon lpr ON p.id = lpr.id_plan '+
     'LEFT JOIN rayon r ON lpr.id_rayon = r.id_rayon '+
-    'LEFT JOIN link_supermarche_plan lsp ON p.id_plan = lsp.id_plan '+
+    'LEFT JOIN link_supermarche_plan lsp ON p.id = lsp.id_plan '+
     'INNER JOIN link_utilisateur_supermarche lus ON lsp.id_supermarche = lus.id_supermarche AND lus.id_user = $1 '+
     'WHERE p.id_plan = $2 AND p.etage = $3;',
   [id_user, id_plan, etage], (error, results) => {
+  if (error) {
+    throw error
+  }
+    response.status(200).json(results.rows)
+  })
+}
+
+const getEntreeByIdPlanAndIdUser = (request, response) => {
+    
+  const id_user = parseInt(request.params.id_user)
+  const id_plan = parseInt(request.params.id_plan)
+
+  pool.query('SELECT DISTINCT e.* '+
+    'FROM entree e '+ 
+    'INNER JOIN link_plan_entree lpe ON e.id = lpe.id_entree AND lpe.id_plan = $2'+
+    'INNER JOIN link_supermarche_plan lsp ON lsp.id_plan = lpe.id_plan' +
+    'INNER JOIN link_utilisateur_supermarche lus ON lsp.id_supermarche = lus.id_supermarche AND lus.id_user = $1 ;',
+  [id_user, id_plan], (error, results) => {
   if (error) {
     throw error
   }
@@ -103,7 +160,7 @@ const getPlansByIdUserAndByIdSupermarche = (request, response) => {
   
   pool.query('SELECT DISTINCT p.* '+
   'FROM plan p '+
-  'INNER JOIN link_supermarche_plan lsp ON p.id_plan = lsp.id_plan AND lsp.id_supermarche = $2 '+
+  'INNER JOIN link_supermarche_plan lsp ON p.id = lsp.id_plan AND lsp.id_supermarche = $2 '+
   'INNER JOIN link_utilisateur_supermarche lus ON lsp.id_supermarche = lus.id_supermarche AND lus.id_user = $1;', 
   [id_user,id_supermarche], (error, results) => {
     if (error) {
@@ -167,7 +224,10 @@ const deleteUser = (request, response) => {
     getUsers,
     getUserById,
     getSupermarcheByIdUser,
+    getBeaconByIdPlanAndIdUser,
     getBeaconByIdPlanAndEtageAndIdUser,
-    getPlansByIdUserAndByIdSupermarche,
-    getRayonByIdPlanAndEtageAndIdUser
+    getRayonByIdPlanAndIdUser,
+    getRayonByIdPlanAndEtageAndIdUser,
+    getEntreeByIdPlanAndIdUser,
+    getPlansByIdUserAndByIdSupermarche
   }
