@@ -132,7 +132,7 @@ const getEntreeByIdPlanAndIdUser = (request, response) => {
 
   pool.query('SELECT DISTINCT e.* '+
     'FROM entree e '+ 
-    'INNER JOIN link_plan_entree lpe ON e.id = lpe.id_entree AND lpe.id_plan = $2'+
+    'INNER JOIN link_plan_entree lpe ON e.id_entree = lpe.id_entree AND lpe.id_plan = $2'+
     'INNER JOIN link_supermarche_plan lsp ON lsp.id_plan = lpe.id_plan' +
     'INNER JOIN link_utilisateur_supermarche lus ON lsp.id_supermarche = lus.id_supermarche AND lus.id_user = $1 ;',
   [id_user, id_plan], (error, results) => {
