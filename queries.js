@@ -48,14 +48,14 @@ const getSupermarcheByIdUser = (request, response) => {
 const getBeaconByIdPlanAndIdUser = (request, response) => {
     
   const id_user = parseInt(request.params.id_user)
-  const id_plan = parseInt(request.params.id)
+  const id_plan = parseInt(request.params.id_plan)
   pool.query('SELECT DISTINCT b.* '+
     'FROM plan p '+
     'LEFT JOIN link_plan_beacon lpb ON p.id = lpb.id_plan '+
     'LEFT JOIN beacon b ON lpb.id_beacon = b.id_beacon '+
     'LEFT JOIN link_supermarche_plan lsp ON p.id = lsp.id_plan '+
     'INNER JOIN link_utilisateur_supermarche lus ON lsp.id_supermarche = lus.id_supermarche AND lus.id_user = $1 '+
-    'WHERE p.id=$2;',
+    'WHERE p.id = $2;',
   [id_user, id_plan], (error, results) => {
     if (error) {
       throw error
