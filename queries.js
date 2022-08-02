@@ -169,8 +169,7 @@ const getArticlePhareAndIdRayonByIdSupermarche = (request, response) => {
   
   pool.query('SELECT DISTINCT a.id_article, r.id_rayon, a.nom_article '+
   'FROM article a '+
-  'LEFT JOIN link_rayon_article lra ON a.id_article = lra.id_article '+
-  'LEFT JOIN rayon r ON lra.id_rayon = r.id_rayon '+
+  'INNER JOIN rayon r ON a.id_article_phare = r.id_article '+
   'LEFT JOIN link_plan_rayon lpr ON r.id_rayon = lpr.id_rayon '+
   'INNER JOIN link_supermarche_plan lsp ON lpr.id_plan = lsp.id_plan AND lsp.id_supermarche = $1;', 
   [id_supermarche], (error, results) => {
