@@ -36,6 +36,8 @@ app.get('/utilisateur/:id_user/plan/:id_plan/entree', db.getEntreeByIdPlanAndIdU
 
 app.get('/utilisateur/:id_user/supermarche/:id_supermarche/plan', db.getPlansByIdUserAndByIdSupermarche)
 
+app.get('/supermarche/:id_supermarche/rayon/article_phare', db.getArticlePhareAndIdRayonByIdSupermarche)
+
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)
 })
