@@ -180,20 +180,8 @@ const getArticlePhareAndIdRayonByIdSupermarche = (request, response) => {
   })
 }
 
-/*
-
-const getRayons = (request, response) => {
-    pool.query('SELECT * FROM rayons;', (error, results) => {
-      if (error) {
-        throw error
-      }
-      response.status(200).json(results.rows)
-    })
-}
-
-*/
 const createRayon = (request, response) => {
-    const { name, email } = request.query
+    const { nom_rayon, type_rayon, longueur, largeur, image_rayon, id_article_phare, coordonnees } = request.body
     pool.query('INSERT INTO rayon (nom_rayon, type_rayon, longueur, largeur, image_rayon, id_article_phare, coordonnees) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
     [nom_rayon, type_rayon, longueur, largeur, image_rayon, id_article_phare, coordonnees], (error, results) => {
       if (error) {
@@ -201,10 +189,10 @@ const createRayon = (request, response) => {
       }
       response.status(201).send(`Rayon ajoute avec ID: ${results.rows[0].id_rayon}`)
     })
-},
+}
 
 const associateRayonWithPlan = (request, response) => {
-  const { name, email } = request.query
+  const { id_plan, id_rayon } = request.body
   pool.query('INSERT INTO link_plan_rayon (id_plan, id_rayon) VALUES ($1, $2) RETURNING *',
   [id_plan, id_rayon], (error, results) => {
     if (error) {
@@ -212,34 +200,35 @@ const associateRayonWithPlan = (request, response) => {
     }
     response.status(201).send(`Rayon ID: ${results.rows[0].id_rayon} associe avec le plan ID: ${results.rows[0].id_plan}`)
   })
-},
-/*
+}
+
 const updateRayon = (request, response) => {
-    const id = parseInt(request.params.id)
-    const { name, email } = request.body
+    const id_rayon = parseInt(request.params.id_rayon)
+    const { nom_rayon, type_rayon, longueur, largeur, image_rayon, id_article_phare, coordonnees } = request.body
   
     pool.query(
-      'UPDATE users SET name = $1, email = $2 WHERE id = $3',
-      [name, email, id],
+      'UPDATE rayon SET nom_rayon = $1, type_rayon = $2, longueur = $3, largeur = $4, image_rayon = $5, id_article_phare = $6, coordonnees = $7 '+
+      'WHERE id_rayon = $8',
+      [nom_rayon, type_rayon, longueur, largeur, image_rayon, id_article_phare, coordonnees, id_rayon],
       (error, results) => {
         if (error) {
           throw error
         }
-        response.status(200).send(`User modified with ID: ${id}`)
+        response.status(200).send(`Rayon avec ID: ${id_rayon} modifie`)
       }
     )
 }
 
-const deleteUser = (request, response) => {
-    const id = parseInt(request.params.id)
+const deleteRayon = (request, response) => {
+    const id_rayon = parseInt(request.params.id_rayon)
   
-    pool.query('DELETE FROM users WHERE id = $1', [id], (error, results) => {
+    pool.query('DELETE FROM rayon WHERE id_rayon = $1', [id_rayon], (error, results) => {
       if (error) {
         throw error
       }
-      response.status(200).send(`User deleted with ID: ${id}`)
+      response.status(200).send(`Rayon avec ID: ${id_rayon} supprime`)
     })
-}*/
+}
 
   module.exports = {
     getUsers,
@@ -251,5 +240,9 @@ const deleteUser = (request, response) => {
     getRayonByIdPlanAndEtageAndIdUser,
     getEntreeByIdPlanAndIdUser,
     getPlansByIdUserAndByIdSupermarche,
-    getArticlePhareAndIdRayonByIdSupermarche
+    getArticlePhareAndIdRayonByIdSupermarche,
+    createRayon,
+    associateRayonWithPlan,
+    updateRayon,
+    deleteRayon
   }

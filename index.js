@@ -40,6 +40,12 @@ app.get('/supermarche/:id_supermarche/rayon/article_phare', db.getArticlePhareAn
 
 app.post('/rayon', db.createRayon)
 
+app.post('/rayon/plan', db.associateRayonWithPlan)
+
+app.post('update/rayon/:id_rayon', db.updateRayon)
+
+app.post('delete/rayon/:id_rayon', db.deleteRayon)
+
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)
 })
