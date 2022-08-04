@@ -191,19 +191,30 @@ const getRayons = (request, response) => {
     })
 }
 
-
-const createUser = (request, response) => {
+*/
+const createRayon = (request, response) => {
     const { name, email } = request.query
-  
-    pool.query('INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *', [name, email], (error, results) => {
+    pool.query('INSERT INTO rayon (nom_rayon, type_rayon, longueur, largeur, image_rayon, id_article_phare, coordonnees) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
+    [nom_rayon, type_rayon, longueur, largeur, image_rayon, id_article_phare, coordonnees], (error, results) => {
       if (error) {
         throw error
       }
-      response.status(201).send(`User added with ID: ${results.rows[0].id}`)
+      response.status(201).send(`Rayon ajoute avec ID: ${results.rows[0].id_rayon}`)
     })
-}
+},
 
-const updateUser = (request, response) => {
+const associateRayonWithPlan = (request, response) => {
+  const { name, email } = request.query
+  pool.query('INSERT INTO link_plan_rayon (id_plan, id_rayon) VALUES ($1, $2) RETURNING *',
+  [id_plan, id_rayon], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(201).send(`Rayon ID: ${results.rows[0].id_rayon} associe avec le plan ID: ${results.rows[0].id_plan}`)
+  })
+},
+/*
+const updateRayon = (request, response) => {
     const id = parseInt(request.params.id)
     const { name, email } = request.body
   
