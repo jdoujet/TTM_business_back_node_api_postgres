@@ -42,9 +42,9 @@ app.post('/rayon', db.createRayon)
 
 app.post('/rayon/plan', db.associateRayonWithPlan)
 
-app.post('update/rayon/:id_rayon', db.updateRayon)
+app.put('/rayon/:id_rayon', db.updateRayon)
 
-app.post('delete/rayon/:id_rayon', db.deleteRayon)
+app.delete('/rayon/:id_rayon', db.deleteRayon)
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)

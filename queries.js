@@ -187,7 +187,7 @@ const createRayon = (request, response) => {
       if (error) {
         throw error
       }
-      response.status(201).send(`Rayon ajoute avec ID: ${results.rows[0].id_rayon}`)
+      response.status(201).send(`${results.rows[0].id_rayon}`)
     })
 }
 
