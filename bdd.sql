@@ -294,4 +294,8 @@ LEFT JOIN link_supermarche_plan lsp ON p.id_plan = lsp.id_plan
 INNER JOIN link_utilisateur_supermarche lus ON lsp.id_supermarche = lus.id_supermarche AND lus.id_user = 1
 WHERE p.id_plan=1 AND p.etage=0;
 
+--ALTER SEQUENCE seq RESTART WITH 1;
+--UPDATE t SET idcolumn=nextval('seq');
+
+
 

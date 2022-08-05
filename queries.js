@@ -204,11 +204,11 @@ const associateRayonWithPlan = (request, response) => {
 
 const updateRayon = (request, response) => {
     const id_rayon = parseInt(request.params.id_rayon)
-    const { nom_rayon, type_rayon, longueur, largeur, image_rayon, id_article_phare, coordonnees } = request.body
+    const { nom_rayon, type_rayon, longueur, largeur, image_rayon, coordonnees } = request.body
   
     pool.query(
-      'UPDATE rayon SET nom_rayon = $1, type_rayon = $2, longueur = $3, largeur = $4, image_rayon = $5, id_article_phare = $6, coordonnees = $7 '+
-      'WHERE id_rayon = $8',
+      'UPDATE rayon SET nom_rayon = $1, type_rayon = $2, longueur = $3, largeur = $4, image_rayon = $5, coordonnees = $6 '+
+      'WHERE id_rayon = $7',
       [nom_rayon, type_rayon, longueur, largeur, image_rayon, id_article_phare, coordonnees, id_rayon],
       (error, results) => {
         if (error) {
