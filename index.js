@@ -42,9 +42,21 @@ app.post('/rayon', db.createRayon)
 
 app.post('/rayon/plan', db.associateRayonWithPlan)
 
+app.post('/entree', db.createEntree)
+
+app.post('/entree/plan', db.associateEntreeWithPlan)
+
 app.put('/rayon/:id_rayon', db.updateRayon)
 
+app.put('/entree/:id_entree', db.updateEntree)
+
 app.delete('/rayon/:id_rayon', db.deleteRayon)
+
+app.delete('/rayon/:id_rayon/plan/:id_plan', db.deleteAssociationBetweenRayonAndPlan)
+
+app.delete('/entree/:id_entree', db.deleteEntree)
+
+app.delete('/rayon/:id_rayon/entree/:id_entree', db.deleteAssociationBetweenEntreeAndPlan)
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)

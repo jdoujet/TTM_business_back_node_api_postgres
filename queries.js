@@ -191,6 +191,18 @@ const createRayon = (request, response) => {
     })
 }
 
+const createEntree = (request, response) => {
+  const { longueur, largeur, coordonnees } = request.body
+  pool.query('INSERT INTO entree (longueur, largeur, coordonnees) VALUES ($1, $2, $3) RETURNING *',
+  [longueur, largeur, coordonnees], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(201).send(`${results.rows[0].id_entree}`)
+  })
+}
+
+
 const associateRayonWithPlan = (request, response) => {
   const { id_plan, id_rayon } = request.body
   pool.query('INSERT INTO link_plan_rayon (id_plan, id_rayon) VALUES ($1, $2) RETURNING *',
@@ -202,6 +214,17 @@ const associateRayonWithPlan = (request, response) => {
   })
 }
 
+const associateEntreeWithPlan = (request, response) => {
+  const { id_plan, id_entree } = request.body
+  pool.query('INSERT INTO link_plan_entree (id_plan, id_entree) VALUES ($1, $2) RETURNING *',
+  [id_plan, id_entree], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(201).send(`Entree ID: ${results.rows[0].id_entree} associe avec le plan ID: ${results.rows[0].id_plan}`)
+  })
+}
+
 const updateRayon = (request, response) => {
     const id_rayon = parseInt(request.params.id_rayon)
     const { nom_rayon, type_rayon, longueur, largeur, image_rayon, coordonnees } = request.body
@@ -209,7 +232,7 @@ const updateRayon = (request, response) => {
     pool.query(
       'UPDATE rayon SET nom_rayon = $1, type_rayon = $2, longueur = $3, largeur = $4, image_rayon = $5, coordonnees = $6 '+
       'WHERE id_rayon = $7',
-      [nom_rayon, type_rayon, longueur, largeur, image_rayon, id_article_phare, coordonnees, id_rayon],
+      [nom_rayon, type_rayon, longueur, largeur, image_rayon, coordonnees, id_rayon],
       (error, results) => {
         if (error) {
           throw error
@@ -217,6 +240,23 @@ const updateRayon = (request, response) => {
         response.status(200).send(`Rayon avec ID: ${id_rayon} modifie`)
       }
     )
+}
+
+const updateEntree = (request, response) => {
+  const id_entree = parseInt(request.params.id_entree)
+  const { longueur, largeur, coordonnees } = request.body
+
+  pool.query(
+    'UPDATE entree SET longueur = $1, largeur = $2, coordonnees = $3 '+
+    'WHERE id_entree = $4',
+    [longueur, largeur, coordonnees, id_entree],
+    (error, results) => {
+      if (error) {
+        throw error
+      }
+      response.status(200).send(`Entree avec ID: ${id_entree} modifie`)
+    }
+  )
 }
 
 const deleteRayon = (request, response) => {
@@ -228,6 +268,39 @@ const deleteRayon = (request, response) => {
       }
       response.status(200).send(`Rayon avec ID: ${id_rayon} supprime`)
     })
+}
+
+const deleteAssociationBetweenRayonAndPlan = (request, response) => {
+  const id_plan = parseInt(request.params.id_plan)
+  const id_rayon = parseInt(request.params.id_rayon)
+  pool.query('DELETE FROM link_plan_rayon WHERE id_plan = $1 AND id_rayon = $2', [id_plan, id_rayon], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).send(`Association entre le rayon avec ID: ${id_rayon} et le plan avec ID: ${id_plan} supprimee`)
+  })
+}
+
+const deleteEntree = (request, response) => {
+  const id_entree = parseInt(request.params.id_entree)
+
+  pool.query('DELETE FROM entree WHERE id_entree = $1', [id_entree], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).send(`Entree avec ID: ${id_entree} supprime`)
+  })
+}
+
+const deleteAssociationBetweenEntreeAndPlan = (request, response) => {
+  const id_plan = parseInt(request.params.id_plan)
+  const id_entree = parseInt(request.params.id_entree)
+  pool.query('DELETE FROM link_plan_entree WHERE id_plan = $1 AND id_entree = $2', [id_plan, id_entree], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).send(`Association entre lentree avec ID: ${id_entree} et le plan avec ID: ${id_plan} supprimee`)
+  })
 }
 
   module.exports = {
@@ -243,6 +316,12 @@ const deleteRayon = (request, response) => {
     getArticlePhareAndIdRayonByIdSupermarche,
     createRayon,
     associateRayonWithPlan,
+    createEntree,
+    associateEntreeWithPlan,
     updateRayon,
-    deleteRayon
+    updateEntree,
+    deleteRayon,
+    deleteAssociationBetweenRayonAndPlan,
+    deleteEntree,
+    deleteAssociationBetweenEntreeAndPlan
   }
