@@ -56,7 +56,7 @@ app.delete('/rayon/:id_rayon/plan/:id_plan', db.deleteAssociationBetweenRayonAnd
 
 app.delete('/entree/:id_entree', db.deleteEntree)
 
-app.delete('/rayon/:id_rayon/entree/:id_entree', db.deleteAssociationBetweenEntreeAndPlan)
+app.delete('entree/:id_entree/plan/:id_plan', db.deleteAssociationBetweenEntreeAndPlan)
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)
