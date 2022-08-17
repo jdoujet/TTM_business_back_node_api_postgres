@@ -22,6 +22,8 @@ app.get('/utilisateur', db.getUsers)
 
 app.get('/utilisateur/:id_user', db.getUserById)
 
+app.get('/article/:id_article', db.getArticleById)
+
 app.get('/utilisateur/:id_user/supermarche', db.getSupermarcheByIdUser)
 
 app.get('/utilisateur/:id_user/plan/:id_plan/beacon', db.getBeaconByIdPlanAndIdUser)

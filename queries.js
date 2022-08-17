@@ -21,7 +21,6 @@ const getUsers = (request, response) => {
 }
 
 const getUserById = (request, response) => {
-    
     const id = parseInt(request.params.id)
     pool.query('SELECT * FROM utilisateur WHERE id_user = $1;', [id], (error, results) => {
       if (error) {
@@ -29,6 +28,16 @@ const getUserById = (request, response) => {
       }
       response.status(200).json(results.rows)
     })
+}
+
+const getArticleById = (request, response) => {
+  const id_article = parseInt(request.params.id_article)
+  pool.query('SELECT * FROM article WHERE id_article = $1;', [id_article], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
 }
 
 const getSupermarcheByIdUser = (request, response) => {
@@ -288,7 +297,7 @@ const deleteEntree = (request, response) => {
     if (error) {
       throw error
     }
-    response.status(200).send(`Entree avec ID: ${id_entree} supprime`)
+    response.status(200).send(`Entree avec ID: ${id_entree} supprimee`)
   })
 }
 
@@ -306,6 +315,7 @@ const deleteAssociationBetweenEntreeAndPlan = (request, response) => {
   module.exports = {
     getUsers,
     getUserById,
+    getArticleById,
     getSupermarcheByIdUser,
     getBeaconByIdPlanAndIdUser,
     getBeaconByIdPlanAndEtageAndIdUser,
