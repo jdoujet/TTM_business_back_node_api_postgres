@@ -20,6 +20,15 @@ const getUsers = (request, response) => {
     })
 }
 
+const getArticles = (request, response) => {
+  pool.query('SELECT * FROM article;', (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
+
 const getUserById = (request, response) => {
     const id = parseInt(request.params.id)
     pool.query('SELECT * FROM utilisateur WHERE id_user = $1;', [id], (error, results) => {
@@ -314,6 +323,7 @@ const deleteAssociationBetweenEntreeAndPlan = (request, response) => {
 
   module.exports = {
     getUsers,
+    getArticles,
     getUserById,
     getArticleById,
     getSupermarcheByIdUser,
