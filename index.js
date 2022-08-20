@@ -26,6 +26,8 @@ app.get('/utilisateur/:id_user', db.getUserById)
 
 app.get('/article/:id_article', db.getArticleById)
 
+app.get('/liste_course/:id_liste_course/article', db.getArticlesByIdListeCourse)
+
 app.get('/utilisateur/:id_user/supermarche', db.getSupermarcheByIdUser)
 
 app.get('/utilisateur/:id_user/plan/:id_plan/beacon', db.getBeaconByIdPlanAndIdUser)
@@ -41,6 +43,8 @@ app.get('/utilisateur/:id_user/plan/:id_plan/entree', db.getEntreeByIdPlanAndIdU
 app.get('/utilisateur/:id_user/supermarche/:id_supermarche/plan', db.getPlansByIdUserAndByIdSupermarche)
 
 app.get('/supermarche/:id_supermarche/rayon/article_phare', db.getArticlePhareAndIdRayonByIdSupermarche)
+
+app.get('/client/:id_client/liste_course', db.getListesCoursesByIdClient)
 
 app.post('/rayon', db.createRayon)
 

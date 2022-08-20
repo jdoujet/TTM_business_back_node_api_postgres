@@ -49,6 +49,19 @@ const getArticleById = (request, response) => {
   })
 }
 
+const getArticlesByIdListeCourse = (request, response) => {
+  const id_liste_course = parseInt(request.params.id_liste_course)
+  pool.query('SELECT DISTINCT a.* '+
+  'FROM article a '+
+  'INNER JOIN link_article_liste_course lalc ON a.id_article = lalc.id_article AND lalc.id_liste_course = $1 ;',
+   [id_liste_course], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
+
 const getSupermarcheByIdUser = (request, response) => {
     
   const id_user = parseInt(request.params.id_user)
@@ -198,6 +211,21 @@ const getArticlePhareAndIdRayonByIdSupermarche = (request, response) => {
   })
 }
 
+const getListesCoursesByIdClient = (request, response) => {
+  const id_client = parseInt(request.params.id_client);
+  
+  pool.query('SELECT DISTINCT lc.* '+
+  'FROM liste_course lc '+
+  'INNER JOIN rayon r ON a.id_article = r.id_article_phare '+
+  'INNER JOIN link_client_liste_course lclc ON lc.id_liste_course = lclc.id_liste_course AND lclc.id_client= $1; ',
+  [id_client], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
+
 const createRayon = (request, response) => {
     const { nom_rayon, type_rayon, longueur, largeur, image_rayon, id_article_phare, coordonnees } = request.body
     pool.query('INSERT INTO rayon (nom_rayon, type_rayon, longueur, largeur, image_rayon, id_article_phare, coordonnees) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
@@ -326,6 +354,7 @@ const deleteAssociationBetweenEntreeAndPlan = (request, response) => {
     getArticles,
     getUserById,
     getArticleById,
+    getArticlesByIdListeCourse,
     getSupermarcheByIdUser,
     getBeaconByIdPlanAndIdUser,
     getBeaconByIdPlanAndEtageAndIdUser,
@@ -334,6 +363,7 @@ const deleteAssociationBetweenEntreeAndPlan = (request, response) => {
     getEntreeByIdPlanAndIdUser,
     getPlansByIdUserAndByIdSupermarche,
     getArticlePhareAndIdRayonByIdSupermarche,
+    getListesCoursesByIdClient,
     createRayon,
     associateRayonWithPlan,
     createEntree,

@@ -187,6 +187,60 @@ ALTER TABLE link_rayon_article
 ADD CONSTRAINT unique_rayon_article
 UNIQUE (id_rayon, id_article);
 
+CREATE TABLE client(
+	id_client SERIAL PRIMARY KEY,
+	nom VARCHAR(255) NOT NULL,
+	prenom VARCHAR(255) NOT NULL,
+	password VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE liste_course(
+	id_liste_course SERIAL PRIMARY KEY,
+	nom_liste VARCHAR(255) NOT NULL,
+	description VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE link_article_liste_course(
+	id SERIAL PRIMARY KEY,
+	id_article INT NOT NULL,	
+	id_liste_course INT NOT NULL
+);
+
+ALTER TABLE link_article_liste_course
+ADD CONSTRAINT constraint_key_article
+FOREIGN KEY (id_article)
+REFERENCES article(id_article);
+
+ALTER TABLE link_article_liste_course
+ADD CONSTRAINT constraint_key_liste_course
+FOREIGN KEY (id_liste_course)
+REFERENCES liste_course(id_liste_course);
+
+ALTER TABLE link_article_liste_course 
+ADD CONSTRAINT unique_article_liste_course
+UNIQUE (id_article, id_liste_course);
+
+CREATE TABLE link_client_liste_course(
+	id SERIAL PRIMARY KEY,
+	id_client INT NOT NULL,	
+	id_liste_course INT NOT NULL
+);
+
+ALTER TABLE link_client_liste_course
+ADD CONSTRAINT constraint_key_client
+FOREIGN KEY (id_client)
+REFERENCES client(id_client);
+
+ALTER TABLE link_client_liste_course
+ADD CONSTRAINT constraint_key_liste_course
+FOREIGN KEY (id_liste_course)
+REFERENCES liste_course(id_liste_course);
+
+ALTER TABLE link_client_liste_course 
+ADD CONSTRAINT unique_client_liste_course
+UNIQUE (id_client, id_liste_course);
+
+
 INSERT INTO utilisateur
 (nom, prenom, password)
 VALUES ('Dum', 'John', '123456'), ('Cho', 'Dina', 'b124'), ('Lieu', 'Nathan', '4575');
@@ -245,6 +299,28 @@ VALUES ('banane', 'origine France', 'bio', 1, '110;210'), ('pomme', 'origine Fra
 INSERT INTO link_rayon_article
 (id_rayon, id_article)
 VALUES (1,1),(1,2),(1,3),(5,4),(1,5),(5,6),(5,7),(3,8),(3,9),(3,10),(2,11),(4,12);
+
+
+INSERT INTO client
+(nom_liste, description)
+VALUES ('Place', 'Tiffany', 'GYUGetrDFer478'), ('Dupk','Jules', 'TUH51Tr5278z'), ('Delrive', 'Jade', 'GHVHGtrre21') ;
+
+INSERT INTO liste_course
+(nom_liste, description)
+VALUES ('favorite','liste produits habituels'), ('rapide', 'liste produits rapides minimums'), ('vegan', 'liste produits vegans'), ('maliste','liste produits habituels'), ('course','liste produits habituels');
+
+INSERT INTO link_article_liste_course
+(id_article, id_liste_course)
+VALUES (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (8, 1), (9, 1), (11, 1),
+	(3, 2), (4, 2), (9, 2), (11, 2),
+	(1, 3), (2, 3), (3, 3), (4, 3), (5, 3), (6, 3), (7, 3), (12, 3),
+	(2, 4), (3, 4), (4, 4), (5, 4), (8, 4), (9, 4), (10, 4), (11, 4),
+	(1, 5), (3, 5), (4, 5), (5, 5), (6, 5), (7, 5), (8, 5), (9, 5);
+
+INSERT INTO link_client_liste_course
+(id_client, id_liste_course)
+VALUES (1, 1), (1, 2),(1, 3), (2, 4), (3, 5);
+
 
 SELECT r.* 
 FROM rayon r
