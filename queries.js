@@ -216,7 +216,6 @@ const getListesCoursesByIdClient = (request, response) => {
   
   pool.query('SELECT DISTINCT lc.* '+
   'FROM liste_course lc '+
-  'INNER JOIN rayon r ON a.id_article = r.id_article_phare '+
   'INNER JOIN link_client_liste_course lclc ON lc.id_liste_course = lclc.id_liste_course AND lclc.id_client= $1; ',
   [id_client], (error, results) => {
     if (error) {
