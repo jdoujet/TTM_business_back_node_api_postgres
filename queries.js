@@ -49,6 +49,16 @@ const getArticleById = (request, response) => {
   })
 }
 
+const getArticleByName = (request, response) => {
+  const nom_article = request.params.nom_article
+  pool.query('SELECT * FROM article WHERE nom_article LIKE ?', ['%' + nom_article + '%'], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
+
 const getArticlesByIdListeCourse = (request, response) => {
   const id_liste_course = parseInt(request.params.id_liste_course)
   pool.query('SELECT DISTINCT a.* '+
@@ -353,6 +363,7 @@ const deleteAssociationBetweenEntreeAndPlan = (request, response) => {
     getArticles,
     getUserById,
     getArticleById,
+    getArticleByName,
     getArticlesByIdListeCourse,
     getSupermarcheByIdUser,
     getBeaconByIdPlanAndIdUser,
