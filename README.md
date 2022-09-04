@@ -8,9 +8,9 @@ Please refer to this repository for the front end for managers made with the fra
 
 ## Stack
 
-NodeJS
-Framework Express
-PostgreSQL
+- NodeJS
+- Framework Express
+- PostgreSQL
 
 ## Description of API
 
