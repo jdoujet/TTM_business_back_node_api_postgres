@@ -6,13 +6,13 @@ Please refer to this repository for the front end for users made with the framew
 
 Please refer to this repository for the front end for managers made with the framework VueJS: https://github.com/jdoujet/TMM_business.git
 
-##Stack
+## Stack
 
 NodeJS
 Framework Express
 PostgreSQL
 
-##Description of API
+## Description of API
 
 User (manager) | Supermarket | Grocery List (Liste de course) | Map (of supermarket) (plan) | Layout (Rayon) | Entrance (Entree) | Beacon | Item (Article) | Client 
 ------------ | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
