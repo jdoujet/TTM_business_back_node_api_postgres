@@ -2,10 +2,10 @@
 
 Back end for the project Track My Market users and managers sides , this projet is configure with CI CD, automatic deployment is done to heroku when merging or pushing in the main branch.
 
-Please refer to this repository for the front end for users made with the framework Flutter: 
+Please refer to this repository for the front end for users made with the framework Flutter: \n
 https://github.com/sarra-ait-yahia/TMM.git
 
-Please refer to this repository for the front end for managers made with the framework VueJS: 
+Please refer to this repository for the front end for managers made with the framework VueJS: \n
 https://github.com/jdoujet/TMM_business.git
 
 ## Stack
