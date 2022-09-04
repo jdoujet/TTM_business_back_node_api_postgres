@@ -26,7 +26,7 @@ app.get('/utilisateur/:id_user', db.getUserById)
 
 app.get('/article/:id_article', db.getArticleById)
 
-app.get('/article/:nom_article/nom_article', db.getArticleByName)
+app.get('/article/:nom_article/nom', db.getArticleByName)
 
 app.get('/liste_course/:id_liste_course/article', db.getArticlesByIdListeCourse)
 
