@@ -43,7 +43,7 @@ const getArticleById = (request, response) => {
   const id_article = parseInt(request.params.id_article)
   pool.query('SELECT * FROM article WHERE id_article = $1;', [id_article], (error, results) => {
     if (error) {
-      throw error
+      throw error 
     }
     response.status(200).json(results.rows)
   })
@@ -51,7 +51,7 @@ const getArticleById = (request, response) => {
 
 const getArticleByName = (request, response) => {
   const nom_article = request.params.nom_article
-  pool.query("SELECT * FROM article WHERE nom_article LIKE '%' || $1 || '%' ", [nom_article], (error, results) => {
+  pool.query("SELECT * FROM article WHERE nom_article LIKE '%$1%' ", [nom_article], (error, results) => {
     if (error) {
       throw error
     }
