@@ -1,4 +1,4 @@
-# Track My Market - Backend with NodeJS and Heroku PostgreSQL service database
+# Track My Market - Backend with NodeJS and Heroku PostgreSQL service
 
 Back end for the project Track My Market users and managers sides , this projet is configure with CI CD, automatic deployment is done to heroku when merging or pushing in the main branch.
 
